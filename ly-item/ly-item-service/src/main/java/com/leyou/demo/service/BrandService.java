@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.List;
+
 @Service
 public class BrandService {
     @Autowired
@@ -26,5 +28,12 @@ public class BrandService {
         }
         Page<Brand> pageInfo = (Page<Brand>) brandMapper.selectByExample(example);
         return new PageResult<>(pageInfo.getTotal(),pageInfo);
+    }
+
+    public void saveBrand(Brand brand, List<Long> cids) {
+        brandMapper.insertSelective(brand);
+        cids.forEach(cid->
+            brandMapper.insertCategoryBrand(cid,brand.getId())
+        );
     }
 }

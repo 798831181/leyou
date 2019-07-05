@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: api-gateway
+  main:
+    allow-bean-definition-overriding: true
 eureka:
   client:
     service-url:
