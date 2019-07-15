@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.leyou.demo.mapper.SpecificationMapper">
+    <resultMap id="specificationResult" type="com.leyou.demo.Specification">
+        <result column="category_id" property="categoryId" />
+        <result column="specifications" property="specifications"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id, province_id, city_name, description
+	</sql>
+
+    <!--<select id="findByName" resultMap="BaseResultMap" parameterType="java.lang.String">-->
+        <!--select-->
+        <!--<include refid="Base_Column_List" />-->
+        <!--from city-->
+        <!--where city_name = #{cityName}-->
+    <!--</select>-->
+    <delete id="deleteInfoById" parameterType="java.lang.Long">
+        delete from tb_specification where category_id = #{id};
+    </delete>
+
+</mapper>
