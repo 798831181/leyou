@@ -4,9 +4,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.leyou.common.pojo.PageResult;
 import com.leyou.demo.Brand;
+import com.leyou.demo.Category;
 import com.leyou.demo.mapper.BrandMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
@@ -32,8 +34,18 @@ public class BrandService {
 
     public void saveBrand(Brand brand, List<Long> cids) {
         brandMapper.insertSelective(brand);
-        cids.forEach(cid->
-            brandMapper.insertCategoryBrand(cid,brand.getId())
-        );
+
+        for (Long cid : cids) {
+            brandMapper.insertCategoryBrand(cid,brand.getId());
+        }
     }
+
+    public List<Category> queryBrandById(Long bid) {
+        return brandMapper.queryByBrandId(bid);
+    }
+    public void delete(Long bid){
+        brandMapper.deleteByPrimaryKey(bid);
+        brandMapper.deleteCategoryBrandRef(bid);
+    }
+
 }
